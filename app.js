@@ -38,15 +38,47 @@ document.getElementById('startQuiz').addEventListener('click', () => {
   qElem.innerHTML = `
   <h3>Question: ${questions[current].question}</h3>
   <ul class="list-group list-group-flush">
-  <li class="list-group-item choice"> ${questions[current].choices[0]} </li>
-  <li class="list-group-item choice"> ${questions[current].choices[1]} </li>
-  <li class="list-group-item choice"> ${questions[current].choices[2]} </li>
-  <li class="list-group-item choice"> ${questions[current].choices[3]} </li>
+  <li class="list-group-item choice"
+  data-value="${questions[current].choices[0]}">   ${questions[current].choices[0]} </li>
+  <li class="list-group-item choice"
+  data-value="${questions[current].choices[1]}">   ${questions[current].choices[1]} </li>
+  <li class="list-group-item choice"
+  data-value="${questions[current].choices[2]}">   ${questions[current].choices[2]} </li>
+  <li class="list-group-item choice"
+  data-value="${questions[current].choices[3]}">   ${questions[current].choices[3]} </li>
 </ul>`
 
 
 document.getElementById('question').append(qElem)
   
+})
+
+document.addEventListener('click', event => {
+  if(event.target.classList.contains('choice')) {
+    if(event.target.dataset.value === questions[current].answer) {
+      score++
+      time ++
+     } 
+     current ++
+     document.getElementById('question').innerHTML = ''
+    let qElem = document.createElement('div')
+    qElem.innerHTML = `
+  <h3>Question: ${questions[current].question}</h3>
+  <ul class="list-group list-group-flush">
+  <li class="list-group-item choice"
+  data-value="${questions[current].choices[0]}">   ${questions[current].choices[0]} </li>
+  <li class="list-group-item choice"
+  data-value="${questions[current].choices[1]}">   ${questions[current].choices[1]} </li>
+  <li class="list-group-item choice"
+  data-value="${questions[current].choices[2]}">   ${questions[current].choices[2]} </li>
+  <li class="list-group-item choice"
+  data-value="${questions[current].choices[3]}">   ${questions[current].choices[3]} </li>
+</ul>`
+
+
+    document.getElementById('question').append(qElem)
+}
+
 })
 
     
