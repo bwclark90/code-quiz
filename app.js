@@ -1,8 +1,12 @@
 
 let score = 0
 let current = 0
-let time = 40
-let timer
+let time = 10
+let timer 
+const endGame = () => {
+  document.getElementById('question').innerHTML = ''
+  document.getElementById('result').textContent = `Score: ${score}`
+}
 let questions = [
   {
     question: 'What attribute should always be attached to an image?',
@@ -31,9 +35,8 @@ let questions = [
   },
 ]
 
-
-
-document.getElementById('startQuiz').addEventListener('click', () => {
+const renderQuestion = () => {
+  document.getElementById('question').innerHTML = ''
   let qElem = document.createElement('div')
   qElem.innerHTML = `
   <h3>Question: ${questions[current].question}</h3>
@@ -49,7 +52,21 @@ document.getElementById('startQuiz').addEventListener('click', () => {
 </ul>`
 
 
-document.getElementById('question').append(qElem)
+  document.getElementById('question').append(qElem)
+
+}
+
+document.getElementById('startQuiz').addEventListener('click', () => {
+  document.getElementById('startQuiz').remove()
+  timer = setInterval(() => {
+    document.getElementById('time').textContent = `Time Remaining: ${time}`
+    time--
+    if (time < 0) {
+      endGame()
+      clearInterval(timer)
+    }
+  }, 1000)
+  renderQuestion()
   
 })
 
@@ -57,26 +74,17 @@ document.addEventListener('click', event => {
   if(event.target.classList.contains('choice')) {
     if(event.target.dataset.value === questions[current].answer) {
       score++
-      time ++
+      time ++ 
      } 
      current ++
-     document.getElementById('question').innerHTML = ''
-    let qElem = document.createElement('div')
-    qElem.innerHTML = `
-  <h3>Question: ${questions[current].question}</h3>
-  <ul class="list-group list-group-flush">
-  <li class="list-group-item choice"
-  data-value="${questions[current].choices[0]}">   ${questions[current].choices[0]} </li>
-  <li class="list-group-item choice"
-  data-value="${questions[current].choices[1]}">   ${questions[current].choices[1]} </li>
-  <li class="list-group-item choice"
-  data-value="${questions[current].choices[2]}">   ${questions[current].choices[2]} </li>
-  <li class="list-group-item choice"
-  data-value="${questions[current].choices[3]}">   ${questions[current].choices[3]} </li>
-</ul>`
-
-
-    document.getElementById('question').append(qElem)
+      
+     if(current>= questions.length) {
+       endGame()
+       clearInterval(timer)
+     } else {
+        renderQuestion()
+    
+     }
 }
 
 })
