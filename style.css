@@ -5,7 +5,6 @@
   border-radius: .3rem;
 }
 
-.hide {
-  display: none;
-  visibility: hidden;
+.container {
+  font-family: 'Indie Flower', cursive;
 }
