@@ -8,6 +8,10 @@
 .container {
   font-family: 'Indie Flower', cursive;
   background-color: rgb(153, 153, 209);
-  height: 550px;
+  height: 800px;
+}
+
+.hidden {
+  display: none;
 }
 

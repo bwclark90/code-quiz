@@ -6,6 +6,7 @@ let timer
 const endGame = () => {
   document.getElementById('question').innerHTML = ''
   document.getElementById('result').textContent = `Score: ${score}`
+  document.getElementById('scoreForm').className = ''
 }
 let questions = [
   {
@@ -87,6 +88,39 @@ document.addEventListener('click', event => {
      }
 }
 
+})
+
+document.getElementById('submitScore').addEventListener('click', event => {
+  event.preventDefault()
+  let initials = document.getElementById('initials').value
+  let scores = JSON.parse(localStorage.getItem('scores')) || []
+  scores.push({initials: initials,score: score})
+  localStorage.setItem('scores', JSON.stringify(scores))
+  
+  scores.sort((a,e) => e.score - a.score)
+
+  let tableElem = document.createElement('table')
+  tableElem.className = 'table'
+  tableElem.innerHTML = `
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Score</th>
+    </tr>
+  </thead>
+  `
+  let tableBody = document.createElement('tbody')
+
+  for(let i = 0; i < scores.length; i++){
+    tableBody.innerHTML += `
+    <tr>
+    <td>${scores[i].initials}</td>
+    <td>${scores[i].score}</td>
+    </tr>
+    `}
+    tableElem.append(tableBody)
+    document.getElementById('question').append(tableElem)
 })
 
     
